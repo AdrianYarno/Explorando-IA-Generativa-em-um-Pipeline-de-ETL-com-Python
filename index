@@ -1,0 +1,28 @@
+import pandas as pd
+import random
+
+# === 1. EXTRAÇÃO (Extract) ===
+# Criando dados fictícios para substituir a API
+data = {
+    'UserID': [1, 2, 3],
+    'Nome': ['Alice', 'Bob', 'Charlie'],
+    'Score': [850, 450, 600]
+}
+df = pd.DataFrame(data)
+
+# === 2. TRANSFORMAÇÃO (Transform) ===
+# Simulando a lógica de negócio/IA para gerar mensagens personalizadas
+def gerar_mensagem(row):
+    if row['Score'] > 700:
+        return f"Olá {row['Nome']}, seu score é excelente! Confira nossas opções de investimento."
+    else:
+        return f"Olá {row['Nome']}, que tal dicas para melhorar seu score financeiro?"
+
+df['Mensagem'] = df.apply(gerar_mensagem, axis=1)
+
+# === 3. CARREGAMENTO (Load) ===
+# Exportando o resultado para um novo arquivo CSV
+df.to_csv('santander_dev_week_results.csv', index=False)
+
+print("Processo ETL concluído com sucesso!")
+print(df[['Nome', 'Mensagem']])
